@@ -26,9 +26,9 @@ from pyspark.sql.types import (
 )
 import uuid
 
-RAW_PATH = "/Volumes/main/life_insurance/raw_landing"   # <-- update to your uploaded path
+RAW_PATH = "/Volumes/workspace/default/life_insurance_raw"   # actual uploaded path
 BRONZE_DB = "life_insurance_bronze"
-BRONZE_PATH = "/Volumes/main/life_insurance/bronze"     # <-- update as needed
+BRONZE_PATH = "/Volumes/workspace/default/life_insurance_bronze"     # bronze delta table storage
 
 BATCH_ID = str(uuid.uuid4())   # unique id per pipeline run, useful for auditing/rollback
 INGEST_TS = F.current_timestamp()
