@@ -98,7 +98,14 @@ silver_customers_cols = [
     "scd_row_id", "customer_id", "full_name", "dob", "gender", "email", "phone",
     "address", "city", "state", "pincode", "effective_date", "end_date", "is_current"
 ]
-customers_scd2_final = customers_scd2.select(*silver_customers_cols)
+# Safety dedup: guarantees no two source rows share the same scd_row_id before merging.
+# This makes the notebook idempotent even if Bronze has re-ingested the same records
+# (Bronze is append-only by design, so reruns can duplicate raw history upstream).
+customers_scd2_final = (
+    customers_scd2
+    .select(*silver_customers_cols)
+    .dropDuplicates(["scd_row_id"])
+)
 
 # COMMAND ----------
 
